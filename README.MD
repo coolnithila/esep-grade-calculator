@@ -7,12 +7,14 @@ Golang 1.24+
 
 Run unit tests:
 ```
-cd grade_calculator/
+cd grade-calculator/
 go test ./...
 ```
 
 Run unit tests with code coverage:
 ```
-cd grade_calculator/
+cd grade-calculator/
 go test -coverprofile=coverage.txt ./...
+go tool cover -func=coverage.txt
+go tool cover -html=coverage.txt
 ```
