@@ -1,3 +1,4 @@
 grade-calculator/coverage.txt
 coverage.txt
-
+test/cover-letter-branches
+ main
