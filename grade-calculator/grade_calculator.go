@@ -78,21 +78,26 @@ func (gc *GradeCalculator) AddGrade(name string, grade int, gradeType GradeType)
 }
 
 func (gc *GradeCalculator) calculateNumericalGrade() int {
-	assignment_average := computeAverage(gc.assignments)
-	exam_average := computeAverage(gc.exams)
-	essay_average := computeAverage(gc.exams)
+	assignmentAverage := computeAverage(gc.assignments)
+	examAverage := computeAverage(gc.exams)
+	essayAverage := computeAverage(gc.essays) // IMPORTANT: essays here
 
-	weighted_grade := float64(assignment_average)*.5 + float64(exam_average)*.35 + float64(essay_average)*.15
+	// Weights: 50% assignments, 35% exams, 15% essays
+	weighted := float64(assignmentAverage)*0.50 +
+		float64(examAverage)*0.35 +
+		float64(essayAverage)*0.15
 
-	return int(weighted_grade)
+	// No special rounding rule given; truncation is OK
+	return int(weighted)
 }
 
 func computeAverage(grades []Grade) int {
-	sum := 0
-
-	for grade, _ := range grades {
-		sum += grade
+	if len(grades) == 0 {
+		return 0 // avoid divide-by-zero; empty category counts as 0
 	}
-
+	sum := 0
+	for _, g := range grades { // sum the actual Grade values
+		sum += g.Grade
+	}
 	return sum / len(grades)
 }
